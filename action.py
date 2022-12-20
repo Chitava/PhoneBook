@@ -21,7 +21,7 @@ def execute_query(connection, query):
         print("Операция выполнена успешно")
     except Error as e:
         print(f"Возникла ошибка '{e}'")
-
+        connection.close()
 
 def Create_DB(): #Создание новой книги
     create_users_table = """
@@ -36,88 +36,112 @@ def Create_DB(): #Создание новой книги
     """
     return create_users_table
 
+def Add_user(connection, user):
+    cursor = connection.cursor()
+    try:
+        cursor.execute("""INSERT INTO users (family, name, secname, date, phone) VALUES (?, ?, ?, ?, ?)""", user)
+        connection.commit()
+        print("Операция выполнена успешно")
+    except Error as e:
+        print(f"Возникла ошибка '{e}'")
+        connection.close()
 
-def Add_User():
-    create_user = """
-    INSERT INTO
-      users (family, name, secname, date, phone)
-    VALUES(?, ?, ?, ?, ?)"""
-    return create_user
+def Find_user(connection, value, numb):
+    match numb:
+         case '1':
+            cursor = connection.cursor()
+            sql_select_query = """select * from users where family = ?;"""
+            cursor.execute(sql_select_query, (value,))
+            connection.commit()
+            records = cursor.fetchall()
+            for row in records:
+                print("Фамилия:", row[1])
+                print("Имя:", row[2])
+                print("Отчество:", row[3])
+                print("Дата рождения:", row[4])
+                print("номер телефона:", row[5], end="\n\n")
+            cursor.close()
+         case '2':
+            cursor = connection.cursor()
+            sql_select_query = """select * from users where name = ?;"""
+            cursor.execute(sql_select_query, (value,))
+            connection.commit()
+            records = cursor.fetchall()
+            for row in records:
+                print("Фамилия:", row[1])
+                print("Имя:", row[2])
+                print("Отчество:", row[3])
+                print("Дата рождения:", row[4])
+                print("номер телефона:", row[5], end="\n\n")
+            cursor.close()
+         case '3':
+            cursor = connection.cursor()
+            sql_select_query = """select * from users where secname = ?;"""
+            cursor.execute(sql_select_query, (value,))
+            connection.commit()
+            records = cursor.fetchall()
+            for row in records:
+                print("Фамилия:", row[1])
+                print("Имя:", row[2])
+                print("Отчество:", row[3])
+                print("Дата рождения:", row[4])
+                print("номер телефона:", row[5], end="\n\n")
+            cursor.close()
+         case '4':
+            cursor = connection.cursor()
+            sql_select_query = """select * from users where date = ?;"""
+            cursor.execute(sql_select_query, (value,))
+            connection.commit()
+            records = cursor.fetchall()
+            for row in records:
+                print("Фамилия:", row[1])
+                print("Имя:", row[2])
+                print("Отчество:", row[3])
+                print("Дата рождения:", row[4])
+                print("номер телефона:", row[5], end="\n\n")
+            cursor.close()
+         case '5':
+            cursor = connection.cursor()
+            sql_select_query = """select * from users where phone = ?;"""
+            cursor.execute(sql_select_query, (value,))
+            connection.commit()
+            records = cursor.fetchall()
+            for row in records:
+                print("Фамилия:", row[1])
+                print("Имя:", row[2])
+                print("Отчество:", row[3])
+                print("Дата рождения:", row[4])
+                print("номер телефона:", row[5], end="\n\n")
+            cursor.close()
+
+def Del_rec(connection, numb):
+    cursor = connection.cursor()
+
+    def delet(numb):
+        sql_select_query = """DELETE FROM users WHERE id = ?;"""
+        cursor.execute(sql_select_query, numb)
+        connection.commit()
+        cursor.close
+
+    if numb == "0":
+        sql_select_query = """SELECT * from users;"""
+        cursor.execute(sql_select_query)
+        connection.commit()
+        records = cursor.fetchall()
+        for row in records:
+            print("N:", row[0])
+            print("Фамилия:", row[1])
+            print("Имя:", row[2])
+            print("Отчество:", row[3])
+            print("Дата рождения:", row[4])
+            print("номер телефона:", row[5], end="\n\n")
+        cursor.close()
+    numb = input("Введите номер записи которую нужно удалить")
+    delet(numb)
 
 
+def Logger(time, operation):
+    with open('log.txt', 'a') as f:
+        f.write(f'{time} произошла операция {operation}\n')
 
 
-
-
-
-
-
-
-def Read_db():  # Функция чтения из DB
-    with open('db.txt', 'r') as f:
-        nums = f.read()
-    return nums
-
-
-def Add_db(x):  # Функция добавления в DB
-    with open('db.txt', 'a') as f:
-        f.write(f'\n {x}')
-
-
-def Write_db(x):  # Функция перезаписи DB
-    with open('db.txt', 'w') as f:
-        f.write(f' {x}')
-
-
-def Find_Atribut(name, db):  # Функция поиска в книжке, передаем DB и искомый атрибут
-    for i in range(len(db)):
-        if name in db[i]:
-            print(f'Найден под номером {i} - {db[i].replace(";", " | ")}')
-
-
-
-def Print_Record(numb, db):
-    record = db[numb].split('; ')
-    print(record)
-
-
-def Edit_Atribut(numb, db):
-    print(numb)
-    record = db[numb - 1].split('; ')
-    print(record)
-    print(f'Сейчас - {record[numb - 1]}')
-    record[numb - 1] = input("Введите изменения--> ")
-    db[numb - 1] = str(record).replace("[", '')
-    db[numb - 1] = db[numb - 1].replace(']', '')
-    db[numb - 1] = db[numb - 1].replace("'", '')
-    db[numb - 1] = db[numb - 1].replace(',', ';')
-    db = str(db)
-    db = db.replace('[', '')
-    db = db.replace(']', '')
-    db = db.replace(', ', '\n')
-    db = db.replace("'", '')
-    return (db)
-
-
-def Del_Atribut(numb, db):
-    db.remove(db[numb])
-    db = str(db)
-    db = db.replace('[', '')
-    db = db.replace(']', '')
-    db = db.replace(', ', '\n')
-    db = db.replace("'", '')
-    print("Удаление выполнено")
-    return db
-
-
-def To_CVS():
-    with open('db.txt', 'r') as f:
-        db = (f.read())
-        list(db.split(';'))
-        db.replace(';', ',')
-        print(db)
-    with open('db.csv', 'w') as f:
-        writer = csv.writer(f, delimiter=' ', quotechar=' ', dialect='excel')
-        writer.writerow(['Фамилия Имя Отчество;', 'Номер телефона;', 'Адрес проживани;'])
-        writer.writerow(db)
-    print("Конвертирование выполнено")

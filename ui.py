@@ -7,8 +7,7 @@ def Select_act():
     print("1 - Создать новую книжку")
     print("2 - Создать новую запись")
     print("3 - Найти запись о человеке")
-    print("4 - Редактировать запись")
-    print("5 - Удалить запись")
+    print("4 - Удалить запись")
     act = input("Выберите действие --> ")
     temp = False
     while temp == False:
@@ -33,45 +32,28 @@ def Add_user():
     user.append(phone)
     return user
 
-
-
-
-
-# Ввод ФИО в DB
-def Input_PB():
-    line = ('')
-    line += (input("Введите фамилию --> "))
-    line += ' ' + input("Введите имя --> ")
-    line += ' ' + input("Введите отчество --> ") + ";"
-    line += ' ' + input("Введите телефон --> ") + ";"
-    line += ' ' + input("Введите адрес --> ")
-    return line
-
-
-# Поиск по DB
-def Find_PB():
-    return input("Введите что будем искать: Фамилию либо имя либо телефон либо адрес --> ")
-
-
-# Редактирование записей
-def Edit_Rec():
-    return int(input("Введите номер записи --> "))
-
-
-# Выбор редактирования
-def Edit_Atribut():
-    print('1 - редактировать ФИО')
-    print('2 - редактировать телефон')
-    print('3 - редактировать адрес')
-    act = input("Введите число --> ")
+def Select_find():
+    print("1 - Искать по фамилии")
+    print("2 - Искать по имени")
+    print("3 - Искать по отчеству")
+    print("4 - Искать по дате рождения")
+    print("5 - Искать по номеру телефона")
+    act = input("Выберите действие --> ")
     temp = False
+
     while temp == False:
-        if act == '1' or act == '2' or act == '3':
+        if act == '1' or act == '2' or act == '3' or act == '4' or act == '5':
             temp = True
         else:
-            act = (input("Не верный выбор, введите цифру от 1 до 3 --> "))
-        return int(act)
+            act = input("Не верный выбор, введите цифру от 1 до 5 --> ")
 
+    value = input("Введите фамилию ").split()
+    value.append(act)
 
-def Del_Rec():
-    return int(input("Введите номер записи --> "))
+    return value
+
+def Del_rec():
+    print("Нужно вывести все записи что бы Вы могли выбрать номер удаляемой записи?")
+    print("или у Вас есть номер нужной записи? если нужно вывести всю книжку нажмите 0")
+    yes = input("или введите номер записи которую нужно удалить ")
+    return yes
