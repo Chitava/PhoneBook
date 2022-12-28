@@ -85,30 +85,18 @@ def All(connection): #Вывод всей книги
     return records
 
 
-def Del_rec(connection, numb):# Удаление записей
+def Delet(connection, numb):# Удаление записей
     cursor = connection.cursor()
-
-    def delet(numb):
-        sql_select_query = """DELETE FROM users WHERE id = ?;"""
+    sql_select_query = """DELETE FROM users WHERE id = ?;"""
+    try:
         cursor.execute(sql_select_query, numb)
         connection.commit()
-        cursor.close
+        done()
+    except Error as e:
+        err(f"Произошла ошибка'{e}'")
+        connection.close()
 
-    if numb == "0":
-        sql_select_query = """SELECT * from users;"""
-        cursor.execute(sql_select_query)
-        connection.commit()
-        records = cursor.fetchall()
-        for row in records:
-            print("N:", row[0])
-            print("Фамилия:", row[1])
-            print("Имя:", row[2])
-            print("Отчество:", row[3])
-            print("Дата рождения:", row[4])
-            print("номер телефона:", row[5], end="\n\n")
-        cursor.close()
-    numb = input("Введите номер записи которую нужно удалить")
-    delet(numb)
+    cursor.close
 
 
 def Logger(time, operation): #Логирование

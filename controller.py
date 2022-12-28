@@ -6,11 +6,13 @@ from sqlite3 import Error
 import tkinter
 import customtkinter
 file_dir = os.path.dirname(os.path.realpath('__file__'))
+customtkinter.set_appearance_mode("dark")
+customtkinter.set_default_color_theme("blue")
 
 def Start_PB():
 
 
-    def All_rec():
+    def All_rec():#Вывод всех записей
         connect = create_connection()
         records = All(connect)
         frame_1 = customtkinter.CTkFrame(master=app)
@@ -18,10 +20,10 @@ def Start_PB():
         result = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
         result.place(x=0, y=0, width=470, height=370)
         for row in records:
-            result.insert("0.0", f"Запись N {row[1]}\nФамилия: {row[1]}\nИмя: {row[2]}\nОтчество: {row[3]}\nДата рождения: {row[4]}\n"
+            result.insert("0.0", f"Запись N {row[0]}\nФамилия: {row[1]}\nИмя: {row[2]}\nОтчество: {row[3]}\nДата рождения: {row[4]}\n"
                                  f"номер телефона: {row[5]}\n\n")
 
-    def Find_rec():
+    def Find_rec():#Поиск записей
         records = []
         def Finder():
             result = []
@@ -44,7 +46,7 @@ def Start_PB():
             find.destroy()
             return result
 
-        find = customtkinter.CTk()
+        find = customtkinter.CTk()#Форма поиска
         find.geometry('470x200')
         find.title("Поиск в телефонном справочнике ")
         find.iconbitmap("img/Phonebook.ico")
@@ -71,7 +73,7 @@ def Start_PB():
         resul.place(x=0, y=0, width=470, height=390)
         find.mainloop()
 
-    def Add_rec():
+    def Add_rec():#Добавление записи
 
         def Add():
             records = []
@@ -90,7 +92,7 @@ def Start_PB():
             records.clear()
             add.destroy()
 
-        add = customtkinter.CTk()
+        add = customtkinter.CTk()#Форма добавления
         add.geometry('400x300')
         add.title("Создание новой записи ")
         add.iconbitmap("img/Phonebook.ico")
@@ -119,21 +121,43 @@ def Start_PB():
         phone_lab.grid(row=4, column=1)
         quitButton = customtkinter.CTkButton(master=add, text="Добавить", command=Add)
         quitButton.place(x=225, y=230)
-        frame_1 = customtkinter.CTkFrame(master=app)
+        frame_1 = customtkinter.CTkFrame(master=add)
         frame_1.place(x=5, y=5, width=470, height=390)
         resul = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
         resul.place(x=0, y=0, width=470, height=390)
         add.mainloop()
 
 
+    def Del_rec():#Удаление записей
+        def Del():
+            connection = create_connection()
+            item = numb.get()
+            print(item)
+            Delet(connection, item)
+            delet.destroy()
+
+        delet = customtkinter.CTk()  # Форма поиска
+        delet.geometry('350x150')
+        delet.title("Удаление записей")
+        delet.iconbitmap("img/Phonebook.ico")
+        delet.resizable(0, 0)
+        frame_1 = customtkinter.CTkFrame(master=delet)
+        frame_1.place(x=5, y=5, width=340, height=140)
+        numb = customtkinter.CTkEntry(master=frame_1)
+        numb.grid(row=0, column=0)
+        numb_lab = customtkinter.CTkLabel(master=frame_1, text='Номер записи', font=('Arial', 12), justify=tkinter.LEFT)
+        numb_lab.place(x=45, y=53)
+        quitButton = customtkinter.CTkButton(master=frame_1, text="Удалить", command=Del)
+        quitButton.place(x=150, y=100)
+        # resul = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
+        # resul.place(x=0, y=0, width=470, height=390)
+        delet.mainloop()
 
 
 
 
 
-    customtkinter.set_appearance_mode("dark")
-    customtkinter.set_default_color_theme("blue")
-    app = customtkinter.CTk()
+    app = customtkinter.CTk()#Основное окно
     app.geometry("600x400")
     app.title("Телефонная книга")
     app.iconbitmap("img/Phonebook.ico")
@@ -150,7 +174,7 @@ def Start_PB():
     button_3.pack(pady=5, padx=10)
     button_3 = customtkinter.CTkButton(text='Изменить', master=frame_2)
     button_3.pack(pady=5, padx=10)
-    button_3 = customtkinter.CTkButton(text='Удалить', master=frame_2)
+    button_3 = customtkinter.CTkButton(text='Удалить', master=frame_2, command=Del_rec)
     button_3.pack(pady=5, padx=10)
     label_save = customtkinter.CTkLabel(text='Сохранить в', master=frame_2, justify=tkinter.LEFT)
     label_save.pack(pady=5, padx=10)
