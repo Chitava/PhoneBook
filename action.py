@@ -16,7 +16,7 @@ def err(text): #Сообщение об ошибках
     error.resizable(0, 0)
     frame_er = customtkinter.CTkFrame(master=error)
     frame_er.place(x=5, y=5, width=290, height=190)
-    label_100 = customtkinter.CTkLabel(master=frame_er, text=text, font=('Arial', 14), justify=tkinter.LEFT)
+    label_100 = customtkinter.CTkLabel(master=frame_er, text=text, font=('Arial', 10), justify=tkinter.LEFT)
     label_100.pack(pady=50, padx=10)
     quitButton = customtkinter.CTkButton(master=frame_er, text="Закрыть", command=error.destroy)
     quitButton.pack(pady=10, padx=10)
@@ -154,6 +154,19 @@ def Connect_many(connection, sql_select_query, value):#Соединение с �
     cursor.close()
     return records
 
+
+def Chenge(connection, numb):
+    cursor = connection.cursor()
+    sql_select_query = """select * from users where id = ?;"""
+    try:
+        cursor.execute(sql_select_query, numb)
+        connection.commit()
+        records = cursor.fetchall()
+    except Error as e:
+        err(f"Произошла ошибка'{e}'")
+        connection.close()
+    cursor.close
+    return records
 
 
 

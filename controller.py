@@ -132,7 +132,6 @@ def Start_PB():
         def Del():
             connection = create_connection()
             item = numb.get()
-            print(item)
             Delet(connection, item)
             delet.destroy()
 
@@ -149,10 +148,98 @@ def Start_PB():
         numb_lab.place(x=45, y=53)
         quitButton = customtkinter.CTkButton(master=frame_1, text="Удалить", command=Del)
         quitButton.place(x=150, y=100)
-        # resul = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
-        # resul.place(x=0, y=0, width=470, height=390)
         delet.mainloop()
 
+    def Find_chenge():
+
+        def FCH():
+            item = numb.get()
+            delet.destroy()
+            Chenge_rec(item)
+
+        delet = customtkinter.CTk()  # Форма поиска
+        delet.geometry('350x150')
+        delet.title("Изменение записей")
+        delet.iconbitmap("img/Phonebook.ico")
+        delet.resizable(0, 0)
+        frame_1 = customtkinter.CTkFrame(master=delet)
+        frame_1.place(x=5, y=5, width=340, height=140)
+        numb = customtkinter.CTkEntry(master=frame_1)
+        numb.grid(row=0, column=0)
+        numb_lab = customtkinter.CTkLabel(master=frame_1, text='Введите номер записи которую нужно изменить', font=('Arial', 12), justify=tkinter.LEFT)
+        numb_lab.place(x=45, y=53)
+        quitButton = customtkinter.CTkButton(master=frame_1, text="Изминить", command=FCH)
+        quitButton.place(x=150, y=100)
+        delet.mainloop()
+
+    def Chenge_rec(numb):  # Добавление записи
+        connection = create_connection()
+        record = Chenge(connection, numb)
+        record = str(record)
+        record.split(',')
+        record = record.replace(',', ' ')
+        record = record.replace("'", '')
+        record = ' '.join(record)
+        print(record)
+        print(record[3])
+
+
+
+
+
+        def Chenger():
+            records = []
+            item = family.get()
+            records.append(item)
+            item = name.get()
+            records.append(item)
+            item = secname.get()
+            records.append(item)
+            item = date.get()
+            records.append(item)
+            item = phone.get()
+            records.append(item)
+            connect = create_connection()
+            Add_user(connect, records)
+            records.clear()
+            chenge.destroy()
+
+        chenge = customtkinter.CTk()  # Форма изменения записи
+        chenge.geometry('400x300')
+        chenge.title("Изменение записи")
+        chenge.iconbitmap("img/Phonebook.ico")
+        chenge.resizable(0, 0)
+        frame_c = customtkinter.CTkFrame(master=chenge)
+        frame_c.place(x=5, y=5, width=390, height=290)
+        family = customtkinter.CTkEntry(master=frame_c)
+        family.grid(row=0, column=0, padx=10, pady=10)
+        #family.insert(record)
+        family_lab = customtkinter.CTkLabel(master=frame_c, text='фамилия', font=('Arial', 12), justify=tkinter.LEFT)
+        family_lab.grid(row=0, column=1)
+        name = customtkinter.CTkEntry(master=frame_c)
+        name.grid(row=1, column=0)
+        #family.insert(record[2])
+        name_lab = customtkinter.CTkLabel(master=frame_c, text='Имя', font=('Arial', 12), justify=tkinter.LEFT)
+        name_lab.grid(row=1, column=1)
+        secname = customtkinter.CTkEntry(master=frame_c)
+        secname.grid(row=2, column=0, padx=10, pady=10)
+        #secname.insert(record[3])
+        secname_lab = customtkinter.CTkLabel(master=frame_c, text='отчество', font=('Arial', 12), justify=tkinter.LEFT)
+        secname_lab.grid(row=2, column=1)
+        date = customtkinter.CTkEntry(master=frame_c)
+        date.grid(row=3, column=0)
+        #date.insert(record[4])
+        date_lab = customtkinter.CTkLabel(master=frame_c, text='дата рождения', font=('Arial', 12),
+                                          justify=tkinter.LEFT)
+        date_lab.grid(row=3, column=1)
+        phone = customtkinter.CTkEntry(master=frame_c)
+        phone.grid(row=4, column=0, padx=10, pady=10)
+        #phone.insert(record[5])
+        phone_lab = customtkinter.CTkLabel(master=frame_c, text='телефон', font=('Arial', 12), justify=tkinter.LEFT)
+        phone_lab.grid(row=4, column=1)
+        quitButton = customtkinter.CTkButton(master=frame_c, text="Изменить")
+        quitButton.place(x=225, y=230)
+        chenge.mainloop()
 
 
 
@@ -172,7 +259,7 @@ def Start_PB():
     button_2.pack(pady=5, padx=10)
     button_3 = customtkinter.CTkButton(text='Добавить', master=frame_2, command=Add_rec)
     button_3.pack(pady=5, padx=10)
-    button_3 = customtkinter.CTkButton(text='Изменить', master=frame_2)
+    button_3 = customtkinter.CTkButton(text='Изменить', master=frame_2, command=Find_chenge)
     button_3.pack(pady=5, padx=10)
     button_3 = customtkinter.CTkButton(text='Удалить', master=frame_2, command=Del_rec)
     button_3.pack(pady=5, padx=10)
