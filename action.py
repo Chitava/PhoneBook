@@ -50,18 +50,14 @@ def save(optionmenu_1): # нажатие кнопки сохранить в....
                 cursor.execute("""SELECT * FROM users""")
                 connection.commit()
                 records = cursor.fetchall()
-                for i in (records):
-                    i = list(i)
-                    for j in i:
-                        result.append(j)
-                print(records)
+                with open("phonDB.csv", mode="w") as file:
+                    for i in (records):
+                        file.write(f"{i[1]}; {i[2]}; {i[3]}; {i[4]}; {i[5]}\n")
                 done()
             except Error as e:
                 err(f"Произошла ошибка'{e}'")
                 connection.close()
-            with open("phonDB.csv", mode="w", encoding='utf-8') as file:
-                    writer = csv.writer(file)
-                    writer.writerow(records)
+
             result.clear()
         case "TXT":
             connection = create_connection()
