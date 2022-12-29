@@ -169,7 +169,7 @@ def Chenge(connection, numb):
     return records
 
 
-def Exchenge(data):
+def Exchenge(data, name):
     print(data)
     connection = create_connection()
     cursor = connection.cursor()
@@ -177,6 +177,7 @@ def Exchenge(data):
     try:
         cursor.execute(sqlite_update_query, data)
         connection.commit()
+        name.destroy()
         done()
     except Error as e:
         print(e)

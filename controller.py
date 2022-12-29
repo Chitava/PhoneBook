@@ -169,15 +169,6 @@ def Start_PB():
         delet.mainloop()
 
 
-
-
-
-
-
-
-
-        return
-
     def Chenge_rec(numb):  # Добавление записи
 
         def Add_chenge():
@@ -194,9 +185,9 @@ def Start_PB():
             records.append(item)
             records.append(result[0])
             print(records)
-            Exchenge(records)
+            Exchenge(records, chenge)
             records.clear()
-            chenge.destroy()
+
 
 
         result = []
