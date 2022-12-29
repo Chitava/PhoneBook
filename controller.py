@@ -1,8 +1,5 @@
-from action import *
 import os
-import datetime
-import sqlite3
-from sqlite3 import Error
+from action import *
 import tkinter
 import customtkinter
 file_dir = os.path.dirname(os.path.realpath('__file__'))
@@ -10,7 +7,6 @@ customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
 
 def Start_PB():
-
 
     def All_rec():#Вывод всех записей
         connect = create_connection()
@@ -172,22 +168,19 @@ def Start_PB():
         quitButton.place(x=150, y=100)
         delet.mainloop()
 
+
+
+
+
+
+
+
+
+        return
+
     def Chenge_rec(numb):  # Добавление записи
-        connection = create_connection()
-        record = Chenge(connection, numb)
-        record = str(record)
-        record.split(',')
-        record = record.replace(',', ' ')
-        record = record.replace("'", '')
-        record = ' '.join(record)
-        print(record)
-        print(record[3])
 
-
-
-
-
-        def Chenger():
+        def Add_chenge():
             records = []
             item = family.get()
             records.append(item)
@@ -199,10 +192,20 @@ def Start_PB():
             records.append(item)
             item = phone.get()
             records.append(item)
-            connect = create_connection()
-            Add_user(connect, records)
+            records.append(result[0])
+            print(records)
+            Exchenge(records)
             records.clear()
             chenge.destroy()
+
+
+        result = []
+        connection = create_connection()
+        record = Chenge(connection, numb)
+        for i in (record):
+            i = list(i)
+            for j in i:
+                result.append(j)
 
         chenge = customtkinter.CTk()  # Форма изменения записи
         chenge.geometry('400x300')
@@ -213,32 +216,32 @@ def Start_PB():
         frame_c.place(x=5, y=5, width=390, height=290)
         family = customtkinter.CTkEntry(master=frame_c)
         family.grid(row=0, column=0, padx=10, pady=10)
-        #family.insert(record)
+        family.insert('0', result[1])
         family_lab = customtkinter.CTkLabel(master=frame_c, text='фамилия', font=('Arial', 12), justify=tkinter.LEFT)
         family_lab.grid(row=0, column=1)
         name = customtkinter.CTkEntry(master=frame_c)
         name.grid(row=1, column=0)
-        #family.insert(record[2])
+        name.insert('0', result[2])
         name_lab = customtkinter.CTkLabel(master=frame_c, text='Имя', font=('Arial', 12), justify=tkinter.LEFT)
         name_lab.grid(row=1, column=1)
         secname = customtkinter.CTkEntry(master=frame_c)
         secname.grid(row=2, column=0, padx=10, pady=10)
-        #secname.insert(record[3])
+        secname.insert('0', result[3])
         secname_lab = customtkinter.CTkLabel(master=frame_c, text='отчество', font=('Arial', 12), justify=tkinter.LEFT)
         secname_lab.grid(row=2, column=1)
         date = customtkinter.CTkEntry(master=frame_c)
         date.grid(row=3, column=0)
-        #date.insert(record[4])
+        date.insert('0', result[4])
         date_lab = customtkinter.CTkLabel(master=frame_c, text='дата рождения', font=('Arial', 12),
                                           justify=tkinter.LEFT)
         date_lab.grid(row=3, column=1)
         phone = customtkinter.CTkEntry(master=frame_c)
         phone.grid(row=4, column=0, padx=10, pady=10)
-        #phone.insert(record[5])
+        phone.insert('0', result[5])
         phone_lab = customtkinter.CTkLabel(master=frame_c, text='телефон', font=('Arial', 12), justify=tkinter.LEFT)
         phone_lab.grid(row=4, column=1)
-        quitButton = customtkinter.CTkButton(master=frame_c, text="Изменить")
-        quitButton.place(x=225, y=230)
+        chengeButton = customtkinter.CTkButton(master=frame_c, text="Изменить", command=Add_chenge)
+        chengeButton.place(x=225, y=230)
         chenge.mainloop()
 
 

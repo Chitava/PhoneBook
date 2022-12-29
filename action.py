@@ -1,7 +1,7 @@
-import csv
+import os
 import sqlite3
 from sqlite3 import Error
-import os
+
 from controller import *
 import tkinter
 import customtkinter
@@ -167,6 +167,24 @@ def Chenge(connection, numb):
         connection.close()
     cursor.close
     return records
+
+
+def Exchenge(data):
+    print(data)
+    connection = create_connection()
+    cursor = connection.cursor()
+    sqlite_update_query = """UPDATE users SET family = ?, name = ?, secname = ?, date = ?, phone = ? WHERE id = ?;"""
+    try:
+        cursor.execute(sqlite_update_query, data)
+        connection.commit()
+        done()
+    except Error as e:
+        print(e)
+        err(f"Произошла ошибка'{e}'")
+
+        connection.close()
+    cursor.close
+
 
 
 
