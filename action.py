@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from sqlite3 import Error
+from datetime import datetime
 
 from controller import *
 import tkinter
@@ -99,9 +100,11 @@ def Delet(connection, numb):# Удаление записей
     cursor.close
 
 
-def Logger(time, operation): #Логирование
+def Logger(operation): #Логирование
+    now = datetime.now()
+
     with open('log.txt', 'a') as f:
-        f.write(f'{time} произошла операция {operation}\n')
+        f.write(f'{now.strftime("%H:%M %d-%m-%Y ")} произошла операция - {operation}\n')
 
 
 

@@ -2,6 +2,8 @@ import os
 from action import *
 import tkinter
 import customtkinter
+
+
 file_dir = os.path.dirname(os.path.realpath('__file__'))
 customtkinter.set_appearance_mode("dark")
 customtkinter.set_default_color_theme("blue")
@@ -9,6 +11,7 @@ customtkinter.set_default_color_theme("blue")
 def Start_PB():
 
     def All_rec():#Вывод всех записей
+        Logger("Вывод всех записей")
         connect = create_connection()
         records = All(connect)
         frame_1 = customtkinter.CTkFrame(master=app)
@@ -84,9 +87,11 @@ def Start_PB():
             item = phone.get()
             records.append(item)
             connect = create_connection()
+            Logger(f"Добавили запись {records[1]} {records[2]} {records[3]} {records[4]}")
             Add_user(connect, records)
             records.clear()
             add.destroy()
+
 
         add = customtkinter.CTk()#Форма добавления
         add.geometry('400x300')
@@ -115,12 +120,12 @@ def Start_PB():
         phone.grid(row=4, column=0, padx=10, pady=10)
         phone_lab = customtkinter.CTkLabel(master=frame_f, text='телефон', font=('Arial', 12), justify=tkinter.LEFT)
         phone_lab.grid(row=4, column=1)
-        quitButton = customtkinter.CTkButton(master=add, text="Добавить", command=Add)
-        quitButton.place(x=225, y=230)
-        frame_1 = customtkinter.CTkFrame(master=add)
-        frame_1.place(x=5, y=5, width=470, height=390)
-        resul = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
-        resul.place(x=0, y=0, width=470, height=390)
+        addButton = customtkinter.CTkButton(master=add, text="Добавить", command=Add)
+        addButton.place(x=225, y=230)
+        #frame_1 = customtkinter.CTkFrame(master=add)
+        #frame_1.place(x=5, y=5, width=470, height=390)
+        #resul = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
+        #resul.place(x=0, y=0, width=470, height=390)
         add.mainloop()
 
 
@@ -128,6 +133,7 @@ def Start_PB():
         def Del():
             connection = create_connection()
             item = numb.get()
+            Logger(f"Удалили запись N {item}")
             Delet(connection, item)
             delet.destroy()
 
@@ -184,6 +190,7 @@ def Start_PB():
             item = phone.get()
             records.append(item)
             records.append(result[0])
+            Logger(f"Изменили запись N {result[0]}")
             print(records)
             Exchenge(records, chenge)
             records.clear()
