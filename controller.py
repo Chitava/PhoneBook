@@ -15,9 +15,9 @@ def Start_PB():
         connect = create_connection()
         records = All(connect)
         frame_1 = customtkinter.CTkFrame(master=app)
-        frame_1.place(x=5, y=5, width=470, height=370)
+        frame_1.place(x=5, y=5, relwidth=0.76, relheight=0.975)
         result = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
-        result.place(x=0, y=0, width=470, height=370)
+        result.place(x=0, y=0, relwidth=1, relheight=1)
         for row in records:
             result.insert("0.0", f"Запись N {row[0]}\nФамилия: {row[1]}\nИмя: {row[2]}\nОтчество: {row[3]}\nДата рождения: {row[4]}\n"
                                  f"номер телефона: {row[5]}\n\n")
@@ -34,6 +34,10 @@ def Start_PB():
             result.append(item)
             connect = create_connection()
             records = Find_user(connect, result)
+            frame_1 = customtkinter.CTkFrame(master=app)
+            frame_1.place(x=5, y=5, relwidth=0.76, relheight=0.975)
+            resul = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
+            resul.place(x=0, y=0, relwidth=1, relheight=1)
             if records == 'Записей нет':
                 err('Записей нет')
             else:
@@ -51,7 +55,7 @@ def Start_PB():
         find.iconbitmap("img/Phonebook.ico")
         find.resizable(0, 0)
         frame_f = customtkinter.CTkFrame(master=find)
-        frame_f.place(x=5, y=5, width=460, height=192)
+        frame_f.pack(fill='both', expand=1, padx=5, pady=5)
         fam = customtkinter.CTkEntry(master=frame_f)
         fam.grid(row=0, column=0)
         family_lab = customtkinter.CTkLabel(master=frame_f, text='фамилия', font=('Arial', 12), justify=tkinter.LEFT)
@@ -67,7 +71,7 @@ def Start_PB():
         quitButton = customtkinter.CTkButton(master=find, text="Поиск", command=Finder)
         quitButton.place(x=325, y=150)
         frame_1 = customtkinter.CTkFrame(master=app)
-        frame_1.place(x=5, y=5, width=470, height=390)
+        frame_1.pack(fill='both', expand=1, padx=5, pady=5)
         resul = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
         resul.place(x=0, y=0, width=470, height=390)
         find.mainloop()
@@ -88,9 +92,9 @@ def Start_PB():
             records.append(item)
             connect = create_connection()
             Logger(f"Добавили запись {records[1]} {records[2]} {records[3]} {records[4]}")
-            Add_user(connect, records)
+            Add_user(connect, records, add)
             records.clear()
-            add.destroy()
+
 
 
         add = customtkinter.CTk()#Форма добавления
@@ -99,7 +103,7 @@ def Start_PB():
         add.iconbitmap("img/Phonebook.ico")
         add.resizable(0, 0)
         frame_f = customtkinter.CTkFrame(master=add)
-        frame_f.place(x=5, y=5, width=390, height=290)
+        frame_f.pack(fill='both', expand=1, padx=5, pady=5)
         family = customtkinter.CTkEntry(master=frame_f)
         family.grid(row=0, column=0, padx=10, pady=10)
         family_lab = customtkinter.CTkLabel(master=frame_f, text='фамилия', font=('Arial', 12), justify=tkinter.LEFT)
@@ -122,10 +126,6 @@ def Start_PB():
         phone_lab.grid(row=4, column=1)
         addButton = customtkinter.CTkButton(master=add, text="Добавить", command=Add)
         addButton.place(x=225, y=230)
-        #frame_1 = customtkinter.CTkFrame(master=add)
-        #frame_1.place(x=5, y=5, width=470, height=390)
-        #resul = customtkinter.CTkTextbox(master=frame_1, font=("Arial", 18))
-        #resul.place(x=0, y=0, width=470, height=390)
         add.mainloop()
 
 
@@ -134,7 +134,7 @@ def Start_PB():
             connection = create_connection()
             item = numb.get()
             Logger(f"Удалили запись N {item}")
-            Delet(connection, item)
+            Delet(connection, item, delet)
             delet.destroy()
 
         delet = customtkinter.CTk()  # Форма поиска
@@ -143,7 +143,7 @@ def Start_PB():
         delet.iconbitmap("img/Phonebook.ico")
         delet.resizable(0, 0)
         frame_1 = customtkinter.CTkFrame(master=delet)
-        frame_1.place(x=5, y=5, width=340, height=140)
+        frame_1.pack(fill='both', expand=1, padx=5, pady=5)
         numb = customtkinter.CTkEntry(master=frame_1)
         numb.grid(row=0, column=0)
         numb_lab = customtkinter.CTkLabel(master=frame_1, text='Номер записи', font=('Arial', 12), justify=tkinter.LEFT)
@@ -165,7 +165,7 @@ def Start_PB():
         delet.iconbitmap("img/Phonebook.ico")
         delet.resizable(0, 0)
         frame_1 = customtkinter.CTkFrame(master=delet)
-        frame_1.place(x=5, y=5, width=340, height=140)
+        frame_1.pack(fill='both', expand=1, padx=5, pady=5)
         numb = customtkinter.CTkEntry(master=frame_1)
         numb.grid(row=0, column=0)
         numb_lab = customtkinter.CTkLabel(master=frame_1, text='Введите номер записи которую нужно изменить', font=('Arial', 12), justify=tkinter.LEFT)
@@ -211,7 +211,7 @@ def Start_PB():
         chenge.iconbitmap("img/Phonebook.ico")
         chenge.resizable(0, 0)
         frame_c = customtkinter.CTkFrame(master=chenge)
-        frame_c.place(x=5, y=5, width=390, height=290)
+        frame_c.pack(fill='both', expand=1, padx=5, pady=5)
         family = customtkinter.CTkEntry(master=frame_c)
         family.grid(row=0, column=0, padx=10, pady=10)
         family.insert('0', result[1])
@@ -243,24 +243,18 @@ def Start_PB():
         chenge.mainloop()
 
 
-    def Save():
-        print(optionmenu)
-
-
-
-
-
-
-
     app = customtkinter.CTk()#Основное окно
     app.geometry("600x400")
     app.title("Телефонная книга")
     app.iconbitmap("img/Phonebook.ico")
     app.resizable(0, 0)
     frame_1 = customtkinter.CTkFrame(master=app)
-    frame_1.place(x=5, y=5, width=470, height=390)
+    frame_1.pack(padx=5, pady=5, side='left', fill='both', expand=1)
     frame_2 = customtkinter.CTkFrame(master=app)
-    frame_2.place(x=490, y=5, width=115, height=390)
+    frame_2.pack(ipadx=20, pady=5, side='right', fill='both')
+    frame_2.columnconfigure(2, weight=1)
+    frame_2.rowconfigure(1, weight=1)
+    frame_2.propagate(0)
     button_1 = customtkinter.CTkButton(text='Найти', master=frame_2, command=Find_rec)
     button_1.pack(pady=5, padx=10)
     button_2 = customtkinter.CTkButton(text='Вывести всю', master=frame_2, command=All_rec)
@@ -276,12 +270,12 @@ def Start_PB():
     optionmenu = customtkinter.CTkOptionMenu(frame_2, values=["CVS", "TXT"], command=save)
     optionmenu.pack(pady=10, padx=10)
     optionmenu.set("формат")
-    # button_s = customtkinter.CTkButton(text='Сохранить', master=frame_2, command=save_c)
-    # button_s.pack(pady=5, padx=10)
-    label_i = customtkinter.CTkLabel(text='ООО "Инстэл"', master=frame_2, justify=tkinter.LEFT)
+    label_i = customtkinter.CTkLabel(text='', master=frame_2, justify=tkinter.LEFT)
     label_i.pack(pady=5, padx=10)
+    label_i = customtkinter.CTkLabel(text='ООО "Инстэл"', master=frame_2, justify=tkinter.LEFT)
+    label_i.pack(side='bottom', pady=5, padx=10)
     label_e = customtkinter.CTkLabel(text='2022 г.', master=frame_2, justify=tkinter.LEFT)
-    label_e.pack(padx=10)
+    label_e.pack(side='bottom', padx=10)
     label_1 = customtkinter.CTkLabel(text='Ваша телефонная книжка', master=frame_1, justify=tkinter.LEFT,
                                      font=('Arial', 35, 'italic'), )
     label_1.pack(padx=10)

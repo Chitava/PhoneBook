@@ -17,7 +17,7 @@ def err(text): #Сообщение об ошибках
     error.iconbitmap("img/Phonebook.ico")
     error.resizable(0, 0)
     frame_er = customtkinter.CTkFrame(master=error)
-    frame_er.place(x=5, y=5, width=290, height=190)
+    frame_er.pack(fill='both', expand=1, padx=5, pady=5)
     label_100 = customtkinter.CTkLabel(master=frame_er, text=text, font=('Arial', 10), justify=tkinter.LEFT)
     label_100.pack(pady=50, padx=10)
     quitButton = customtkinter.CTkButton(master=frame_er, text="Закрыть", command=error.destroy)
@@ -32,7 +32,7 @@ def done(): #Сообщение об успешной операции
     error.iconbitmap("img/Phonebook.ico")
     error.resizable(0, 0)
     frame_er = customtkinter.CTkFrame(master=error)
-    frame_er.place(x=5, y=5, width=290, height=190)
+    frame_er.pack(fill='both', expand=1, padx=5, pady=5)
     label_100 = customtkinter.CTkLabel(master=frame_er, text='Операция выполнена успешно!', font=('Arial', 18), justify=tkinter.LEFT)
     label_100.pack(pady=50, padx=10)
     quitButton = customtkinter.CTkButton(master=frame_er, text="Закрыть", command=error.destroy)
@@ -84,11 +84,12 @@ def execute_query(connection, query): #Выполнить запрос SQL
         connection.close()
 
 
-def Add_user(connection, user): #Добавление нового пользователя
+def Add_user(connection, user, form): #Добавление нового пользователя
     cursor = connection.cursor()
     try:
         cursor.execute("""INSERT INTO users (family, name, secname, date, phone) VALUES (?, ?, ?, ?, ?)""", user)
         connection.commit()
+        form.destroy()
         done()
     except Error as e:
         err(f"Произошла ошибка'{e}'")
@@ -107,12 +108,13 @@ def All(connection): #Вывод всей книги
     return records
 
 
-def Delet(connection, numb):# Удаление записей
+def Delet(connection, numb, form):# Удаление записей
     cursor = connection.cursor()
     sql_select_query = """DELETE FROM users WHERE id = ?;"""
     try:
         cursor.execute(sql_select_query, numb)
         connection.commit()
+        form.destroy()
         done()
     except Error as e:
         err(f"Произошла ошибка'{e}'")
