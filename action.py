@@ -63,6 +63,23 @@ def save(optionmenu_1): # нажатие кнопки сохранить в....
                     writer = csv.writer(file)
                     writer.writerow(records)
             result.clear()
+        case "TXT":
+            connection = create_connection()
+            cursor = connection.cursor()
+            try:
+                cursor.execute("""SELECT * FROM users""")
+                connection.commit()
+                records = cursor.fetchall()
+
+            except Error as e:
+                err(f"Произошла ошибка'{e}'")
+                connection.close()
+            with open("phonDB.txt", mode="w", encoding='utf-8') as file:
+                for i in records:
+                    i = str(i)
+                    file.write(f"{i}\n")
+                done()
+                result.clear()
 
 def create_connection():#Соединение с SQL
     connection = None
