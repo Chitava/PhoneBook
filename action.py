@@ -2,6 +2,7 @@ import os
 import sqlite3
 from sqlite3 import Error
 from datetime import datetime
+import csv
 
 from controller import *
 import tkinter
@@ -40,8 +41,28 @@ def done(): #Сообщение об успешной операции
 
 
 def save(optionmenu_1): # нажатие кнопки сохранить в....
-    print(optionmenu_1)
-
+    result = []
+    match (optionmenu_1):
+        case "CVS":
+            connection = create_connection()
+            cursor = connection.cursor()
+            try:
+                cursor.execute("""SELECT * FROM users""")
+                connection.commit()
+                records = cursor.fetchall()
+                for i in (records):
+                    i = list(i)
+                    for j in i:
+                        result.append(j)
+                print(records)
+                done()
+            except Error as e:
+                err(f"Произошла ошибка'{e}'")
+                connection.close()
+            with open("phonDB.csv", mode="w", encoding='utf-8') as file:
+                    writer = csv.writer(file)
+                    writer.writerow(records)
+            result.clear()
 
 def create_connection():#Соединение с SQL
     connection = None

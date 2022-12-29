@@ -243,6 +243,13 @@ def Start_PB():
         chenge.mainloop()
 
 
+    def Save():
+        print(optionmenu)
+
+
+
+
+
 
 
     app = customtkinter.CTk()#Основное окно
@@ -266,11 +273,11 @@ def Start_PB():
     button_3.pack(pady=5, padx=10)
     label_save = customtkinter.CTkLabel(text='Сохранить в', master=frame_2, justify=tkinter.LEFT)
     label_save.pack(pady=5, padx=10)
-    optionmenu_1 = customtkinter.CTkOptionMenu(frame_2, values=["CVS", "EXCEL", "TXT"], command=save)
-    optionmenu_1.pack(pady=10, padx=10)
-    optionmenu_1.set("формат")
-    label_100 = customtkinter.CTkLabel(text='', master=frame_2, justify=tkinter.LEFT)
-    label_100.pack(pady=5, padx=10)
+    optionmenu = customtkinter.CTkOptionMenu(frame_2, values=["CVS", "TXT"], command=save)
+    optionmenu.pack(pady=10, padx=10)
+    optionmenu.set("формат")
+    # button_s = customtkinter.CTkButton(text='Сохранить', master=frame_2, command=save_c)
+    # button_s.pack(pady=5, padx=10)
     label_i = customtkinter.CTkLabel(text='ООО "Инстэл"', master=frame_2, justify=tkinter.LEFT)
     label_i.pack(pady=5, padx=10)
     label_e = customtkinter.CTkLabel(text='2022 г.', master=frame_2, justify=tkinter.LEFT)
